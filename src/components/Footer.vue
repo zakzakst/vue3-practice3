@@ -52,8 +52,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from '@vue/composition-api';
-import { profileMockData } from '@/store/profile';
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  computed,
+} from '@vue/composition-api';
+import { profileStore } from '@/store/profile';
 
 export default defineComponent({
   setup(prop, context) {
@@ -72,7 +77,9 @@ export default defineComponent({
         },
       ],
       // サインインしているユーザー
-      signInUser: profileMockData,
+      signInUser: computed(() => {
+        return profileStore.profile;
+      }),
     });
 
     /**
@@ -115,6 +122,7 @@ export default defineComponent({
      * サインアウトします。
      */
     const signOut = () => {
+      profileStore.profile = null;
       routerPush('/sign-in');
     };
 

@@ -1,8 +1,12 @@
 <template>
-  <div id="app">
-    <router-view />
+  <v-app>
+    <v-main>
+      <v-container fluid pt-0>
+        <router-view />
+      </v-container>
+    </v-main>
     <Footer />
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">

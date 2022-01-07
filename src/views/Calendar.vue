@@ -279,16 +279,51 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api';
+import {
+  defineComponent,
+  reactive,
+  computed,
+  nextTick,
+  toRefs,
+} from '@vue/composition-api';
+import { CalendarTimestamp, CalendarEvent } from 'vuetify';
+import {
+  parseDate,
+  parseTimestamp,
+} from 'vuetify/lib/components/VCalendar/util/timestamp';
+import {
+  CalendarEventDetail,
+  NewCalendarEvent,
+} from '@/store/calendar-event.model';
+import { calendarEventStore, add, update } from '@/store/calendar-event';
+import { sharedUserStore, getThemeColor } from '@/store/shared-user';
+import { profileStore } from '@/store/profile';
+
+interface VCalendar {
+  scrollToTime(time: string): void;
+  prev(): void;
+  next(): void;
+}
 
 export default defineComponent({
   props: {
+    /**
+     * 表示するカレンダーの種類（月／週／日）を指定します。
+     */
     type: {
+      type: String,
       required: true,
       validator: (value: string) => {
         return ['month', 'week', 'day'].includes(value);
       },
     },
+  },
+  setup(props, context) {
+    const state = reactive({
+      // カレンダーコンポーネントの参照
+      calendar: null as VCalendar | null,
+      start: null as CalendarTimestamp | null,
+    });
   },
 });
 </script>

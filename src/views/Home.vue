@@ -64,7 +64,7 @@ import { todayCalendarEventMockData } from '@/store/calendar-event';
 import { sharedUserStore, getThemeColor } from '@/store/shared-user';
 
 export default defineComponent({
-  setup(prop, context) {
+  setup() {
     const state = reactive({
       // 本日の日付です。
       today: parseDate(new Date()),

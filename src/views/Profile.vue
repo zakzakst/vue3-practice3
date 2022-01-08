@@ -45,7 +45,7 @@
         open-on-hover
       >
         <v-card>
-          <ValidationObserver v-slot="{invalid}">
+          <ValidationObserver v-slot="{ invalid }">
             <ValidationProvider
               v-slot="{ errors }"
               name="ユーザー名"

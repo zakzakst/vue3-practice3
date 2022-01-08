@@ -22,6 +22,13 @@ configure(config);
 extend('required', required);
 extend('max', max);
 
+extend('userNameAllowedCharacters', {
+  message: '{_field_}は英字、数字、「_」のみ使用できます。',
+  validate: (value) => {
+    return /^[0-9A-Z_]*$/i.test(value);
+  },
+});
+
 // 日本語ローカライズ
 localize('ja', ja);
 

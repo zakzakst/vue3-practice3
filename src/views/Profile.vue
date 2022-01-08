@@ -79,7 +79,7 @@
             <ValidationProvider
               v-slot="{ errors }"
               name="ニックネーム"
-              rules="required|max:15"
+              :rules="validationRules.nickname"
             >
               <v-card-text>
                 <v-container>
@@ -126,7 +126,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from '@vue/composition-api';
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  computed,
+} from '@vue/composition-api';
 import {
   profileStore,
   updateUserName,
@@ -151,6 +156,15 @@ export default defineComponent({
       isOpenEditUserNameDialog: false,
       // ニックネーム編集ダイアログをオープンするかどうかを示す値です。
       isOpenEditNicknameDialog: false,
+      // バリデーションルールです。
+      validationRules: computed(() => {
+        return {
+          nickname: {
+            required: true,
+            max: 15,
+          },
+        };
+      }),
     });
 
     /**

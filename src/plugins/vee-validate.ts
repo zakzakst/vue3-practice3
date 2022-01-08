@@ -13,8 +13,9 @@ import { required, max, ext, size } from 'vee-validate/dist/rules';
 const config = {
   // すべてのバリデーションルールを検証
   bails: false,
-  // input, blurのタイミングでバリデーションを実行。
-  mode: 'aggressive',
+  // change, blurのタイミングでバリデーションを実行。
+  // 入力値が有効な値に復帰した場合は即時にエラーを消す。
+  mode: 'eager',
 };
 configure(config);
 

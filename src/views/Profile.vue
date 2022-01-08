@@ -160,7 +160,7 @@ import {
 } from '@vue/composition-api';
 import {
   profileStore,
-  updateUserName,
+  updateUserNameAsync,
   updateNickname,
   updateThemeColor,
 } from '@/store/profile';
@@ -299,13 +299,15 @@ export default defineComponent({
     /**
      * ユーザー名を保存します。
      */
-    const saveUserName = () => {
-      if (state.newUserName) {
-        // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        // profileStore.profile!.userName = state.newUserName;
-        updateUserName(state.newUserName);
+    const saveUserName = async () => {
+      try {
+        if (state.newUserName) {
+          await updateUserNameAsync(state.newUserName);
+        }
+        state.isOpenEditUserNameDialog = false;
+      } catch (error) {
+        console.log('error: ', error.response?.data?.title);
       }
-      state.isOpenEditUserNameDialog = false;
     };
 
     /**

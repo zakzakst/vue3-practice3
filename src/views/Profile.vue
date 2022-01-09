@@ -158,12 +158,13 @@ import {
   watch,
   nextTick,
 } from '@vue/composition-api';
-import {
-  profileStore,
-  updateUserNameAsync,
-  updateNickname,
-  updateThemeColor,
-} from '@/store/profile';
+// import {
+//   profileStore,
+//   updateUserNameAsync,
+//   updateNickname,
+//   updateThemeColor,
+// } from '@/store/profile';
+import { profileStore } from '@/store/profile/profile';
 import { validate, ValidationObserver } from 'vee-validate';
 import { ValidationItems } from '@/validation/validation-items';
 
@@ -178,14 +179,14 @@ export default defineComponent({
       > | null,
       // プロフィール
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      profile: profileStore.profile!,
+      profile: profileStore.getProfile!,
       // 新しいユーザー名
       newUserName: null as string | null,
       // 新しいニックネーム
       newNickname: null as string | null,
       // 新しいテーマカラー
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      newThemeColor: profileStore.profile!.themeColor,
+      newThemeColor: profileStore.getProfile!.themeColor,
       // ユーザー名編集ダイアログをオープンするかどうかを示す値です。
       isOpenEditUserNameDialog: false,
       // ニックネーム編集ダイアログをオープンするかどうかを示す値です。
@@ -280,9 +281,7 @@ export default defineComponent({
      * テーマカラーを保存します。
      */
     const saveThemeColor = () => {
-      // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      // profileStore.profile!.themeColor = state.newThemeColor;
-      updateThemeColor(state.newThemeColor);
+      profileStore.updateThemeColorAsync(state.newThemeColor);
     };
 
     /**
@@ -306,7 +305,7 @@ export default defineComponent({
     const saveUserName = async () => {
       try {
         if (state.newUserName) {
-          await updateUserNameAsync(state.newUserName);
+          await profileStore.updateUserNameAsync(state.newUserName);
         }
         state.isOpenEditUserNameDialog = false;
       } catch (error) {
@@ -334,9 +333,7 @@ export default defineComponent({
      */
     const saveNickname = () => {
       if (state.newNickname) {
-        // // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        // profileStore.profile!.nickname = state.newNickname;
-        updateNickname(state.newNickname);
+        profileStore.updateNicknameAsync(state.newNickname);
       }
       state.isOpenEditNicknameDialog = false;
     };

@@ -6,8 +6,5 @@ config.rawError = true;
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
-  modules: {},
+  strict: true,
 });

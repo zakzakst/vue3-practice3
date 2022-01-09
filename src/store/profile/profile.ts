@@ -12,7 +12,7 @@ import axios from 'axios';
 
 @Module({ dynamic: true, store, name: 'profile', namespaced: true })
 class ProfileModule extends VuexModule {
-  private profile: Profile | null = null;
+  public profile: Profile | null = null;
 
   /**
    * プロフィールを取得します。
@@ -45,6 +45,7 @@ class ProfileModule extends VuexModule {
    * 新しいテーマカラーを State に保存します。
    * @param themeColor テーマカラー
    */
+  @Mutation
   private updateThemeColor(themeColor: string) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     this.profile!.themeColor = themeColor;
@@ -63,7 +64,7 @@ class ProfileModule extends VuexModule {
    * State からプロフィールをクリアします。
    */
   @Mutation
-  private clearProfile() {
+  public clearProfile() {
     this.profile = null;
   }
 

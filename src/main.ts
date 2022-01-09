@@ -8,8 +8,13 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import '@/plugins/composition-api';
 import '@/plugins/vee-validate';
 import '@/plugins/axios';
+import * as direvtives from '@/directives';
 
 Vue.config.productionTip = false;
+
+for (const [key, directive] of Object.entries(direvtives)) {
+  Vue.directive(key, directive);
+}
 
 new Vue({
   router,

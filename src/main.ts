@@ -9,11 +9,15 @@ import '@/plugins/composition-api';
 import '@/plugins/vee-validate';
 import '@/plugins/axios';
 import * as direvtives from '@/directives';
+import * as components from '@/components';
 
 Vue.config.productionTip = false;
 
 for (const [key, directive] of Object.entries(direvtives)) {
   Vue.directive(key, directive);
+}
+for (const [key, component] of Object.entries(components)) {
+  Vue.component(key, component);
 }
 
 new Vue({

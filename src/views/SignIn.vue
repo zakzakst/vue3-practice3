@@ -5,7 +5,13 @@
         <v-text-field v-my-example="exampleHandler" />
       </div>
       <p v-text="bar" /> -->
-      <v-text-field v-my-example:foo.bar.baz="exampleHandler" />
+      <!-- <v-text-field v-my-example:foo.bar.baz="exampleHandler" /> -->
+      <my-example
+        v-model="parentValue"
+        counter="10"
+        clearable
+        @custom-event="customEventHandler"
+      />
       <p class="display-1 py-12">サンプルアプリケーションにサインインする</p>
       <div>
         <v-btn
@@ -45,26 +51,39 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from '@vue/composition-api';
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  onMounted,
+} from '@vue/composition-api';
 // import { signInAsync } from '@/store/profile';
 import { profileStore } from '@/store/profile/profile';
 // import { myExample } from '@/directives/my-example';
+import { MyExampleComponentParameter } from '@/components/MyExample.vue';
 
 export default defineComponent({
   // directives: {
   //   myExample,
   // },
   setup(prop, context) {
+    console.log('親コンポーネント: created');
     const state = reactive({
-      foo: null as string | null,
-      bar: null as string | null,
+      // foo: null as string | null,
+      // bar: null as string | null,
+      parentValue: { foo: 'foo', bar: 'bar' } as MyExampleComponentParameter,
     });
-    const exampleHandler = (event: Event) => {
-      console.log(
-        'event.target.value: ',
-        (event.target as HTMLInputElement).value,
-      );
-    };
+    // const exampleHandler = (event: Event) => {
+    //   console.log(
+    //     'event.target.value: ',
+    //     (event.target as HTMLInputElement).value,
+    //   );
+    // };
+
+    onMounted(() => {
+      console.log('親コンポーネント: mounted');
+    });
+
     /**
      * サインインします。
      */
@@ -78,10 +97,15 @@ export default defineComponent({
       }
     };
 
+    const customEventHandler = (value: number) => {
+      console.log('value: ', value);
+    };
+
     return {
       ...toRefs(state),
-      exampleHandler,
+      // exampleHandler,
       signIn,
+      customEventHandler,
     };
   },
 });

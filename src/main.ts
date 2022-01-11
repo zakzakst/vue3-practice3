@@ -15,6 +15,7 @@ import * as direvtives from '@/directives';
 import * as components from '@/components';
 
 Vue.config.productionTip = false;
+Vue.config.performance = true;
 
 for (const [key, directive] of Object.entries(direvtives)) {
   Vue.directive(key, directive);

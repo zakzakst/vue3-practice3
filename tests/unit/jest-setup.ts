@@ -20,3 +20,7 @@ global.mockAxiosPatch = (value: any) => {
   // axios.patchをモック化
   jest.spyOn(axios, 'patch').mockResolvedValue(value);
 };
+
+import Vue from 'vue';
+import VueCompositionAPI from '@vue/composition-api';
+Vue.use(VueCompositionAPI);

@@ -157,6 +157,7 @@ import {
   computed,
   watch,
   nextTick,
+  // onErrorCaptured,
 } from '@vue/composition-api';
 // import {
 //   profileStore,
@@ -169,6 +170,7 @@ import { validate, ValidationObserver } from 'vee-validate';
 import { ValidationItems } from '@/validation/validation-items';
 
 export default defineComponent({
+  // setup(prop, context) {
   setup() {
     const state = reactive({
       userNameValidationObserver: null as InstanceType<
@@ -254,6 +256,14 @@ export default defineComponent({
       },
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // onErrorCaptured((error: any) => {
+    //   if (error?.response?.status === 422) {
+    //     context.root.$toast(error.response?.data?.title);
+    //   }
+    //   return false;
+    // });
+
     /**
      * アバターを保存します。
      * @param file アバターの画像ファイル
@@ -309,7 +319,11 @@ export default defineComponent({
         }
         state.isOpenEditUserNameDialog = false;
       } catch (error) {
-        console.log('error: ', error.response?.data?.title);
+        // console.log('error: ', error.response?.data?.title);
+        // if (error?.response?.status === 422) {
+        //   context.root.$toast(error.response?.data?.title);
+        // }
+        // throw error;
       }
     };
 

@@ -8,7 +8,7 @@ import {
 } from 'vuex-module-decorators';
 import { Profile } from '@/store/profile.model';
 import { update } from '@/store/shared-user';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 /**
  * sessionStorage にプロフィール情報を保存します。
@@ -99,7 +99,9 @@ class ProfileModule extends VuexModule {
     const data = { userName: userName };
     // eslint-disable-next-line no-useless-catch
     try {
-      await axios.patch('profile', data);
+      await axios.patch('profile', data, {
+        retryable: true,
+      } as AxiosRequestConfig);
       this.updateUserName(userName);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       update(this.profile!);

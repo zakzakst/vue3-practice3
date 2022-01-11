@@ -84,6 +84,9 @@
             </v-card-actions>
           </ValidationObserver>
         </v-card>
+        <v-overlay :value="editUserNameDialogOverlay">
+          <v-progress-circular color="primary" indeterminate size="64" />
+        </v-overlay>
       </v-dialog>
       <v-text-field
         v-model="profile.nickname"
@@ -173,6 +176,7 @@ export default defineComponent({
   // setup(prop, context) {
   setup() {
     const state = reactive({
+      editUserNameDialogOverlay: false,
       userNameValidationObserver: null as InstanceType<
         typeof ValidationObserver
       > | null,
@@ -313,18 +317,27 @@ export default defineComponent({
      * ユーザー名を保存します。
      */
     const saveUserName = async () => {
-      try {
-        if (state.newUserName) {
+      if (state.newUserName) {
+        state.editUserNameDialogOverlay = true;
+        try {
           await profileStore.updateUserNameAsync(state.newUserName);
+        } finally {
+          state.editUserNameDialogOverlay = false;
         }
-        state.isOpenEditUserNameDialog = false;
-      } catch (error) {
-        // console.log('error: ', error.response?.data?.title);
-        // if (error?.response?.status === 422) {
-        //   context.root.$toast(error.response?.data?.title);
-        // }
-        // throw error;
       }
+      state.isOpenEditUserNameDialog = false;
+      // try {
+      //   if (state.newUserName) {
+      //     await profileStore.updateUserNameAsync(state.newUserName);
+      //   }
+      //   state.isOpenEditUserNameDialog = false;
+      // } catch (error) {
+      //   // console.log('error: ', error.response?.data?.title);
+      //   // if (error?.response?.status === 422) {
+      //   //   context.root.$toast(error.response?.data?.title);
+      //   // }
+      //   // throw error;
+      // }
     };
 
     /**
